@@ -1,5 +1,5 @@
-# 💫 About Me:
-💫 **About Me**<br><br>Hi, I'm Shishir Tambe — a technical consultant (civil) with a growing passion for open-source documentation. I'm currently working with tools like Markdown, Git, and GitHub, while actively learning R and Quarto to strengthen my technical writing workflow. I'm looking to contribute to Google Summer of Docs (GSOD) and am seeking guidance in technical writing to make impactful contributions. Feel free to ask me about QGIS, Environmental Impact Assessment (EIA), or Life Cycle Assessment (LCA). Always open to learning and collaborating!
+💫 **#About Me**
+<br><br>Hi, I'm Shishir Tambe — a technical consultant (civil) with a growing passion for open-source documentation. I'm currently working with tools like Markdown, Git, and GitHub, while actively learning R and Quarto to strengthen my technical writing workflow. I'm looking to contribute to Google Summer of Docs (GSOD) and am seeking guidance in technical writing to make impactful contributions. Feel free to ask me about QGIS, Environmental Impact Assessment (EIA), or Life Cycle Assessment (LCA). Always open to learning and collaborating!
 
 
 ## 🌐 Socials:
