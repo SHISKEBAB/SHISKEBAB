@@ -7,9 +7,10 @@
   <style>
     body {
       margin: 0;
-      background-color: black;
+      background: radial-gradient(circle at center, #000000 0%, #111111 100%);
       overflow: hidden;
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
+      color: white;
     }
 
     .solar-system {
@@ -17,22 +18,21 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 800px;
-      height: 800px;
+      width: 1000px;
+      height: 1000px;
     }
 
     .sun {
-      position: absolute;
       width: 180px;
       height: 180px;
       background-image: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png');
       background-size: cover;
       border-radius: 50%;
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 60px yellow;
-      z-index: 10;
+      box-shadow: 0 0 40px white;
     }
 
     .orbit {
@@ -52,43 +52,33 @@
     }
 
     .planet {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
-      background-size: cover;
-      background-position: center;
-      position: absolute;
-      transform: translate(-50%, -50%);
-      top: -125px; /* Distance from center for orbiting effect */
-      left: 50%;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      color: white;
-      font-size: 13px;
-      text-align: center;
-      font-weight: bold;
-      text-shadow: 1px 1px 3px black;
-    }
-
-    .planet-label {
-      font-size: 11px;
-    }
-
-    .planet-value {
+      justify-content: center;
       font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+      color: white;
     }
 
-    @keyframes orbit1 { 100% { transform: rotate(360deg); } }
-    @keyframes orbit2 { 100% { transform: rotate(-360deg); } }
-    @keyframes orbit3 { 100% { transform: rotate(360deg); } }
-    @keyframes orbit4 { 100% { transform: rotate(-360deg); } }
+    #repos { background-color: pink; }
+    #prs { background-color: skyblue; }
+    #merged { background-color: limegreen; }
+    #closed { background-color: gray; }
 
-    .rotate1 { animation: orbit1 12s linear infinite; }
-    .rotate2 { animation: orbit2 16s linear infinite; }
-    .rotate3 { animation: orbit3 20s linear infinite; }
-    .rotate4 { animation: orbit4 24s linear infinite; }
+    @keyframes rotate1 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes rotate2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+    @keyframes rotate3 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes rotate4 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+    .rotate1 { animation: rotate1 12s linear infinite; }
+    .rotate2 { animation: rotate2 18s linear infinite; }
+    .rotate3 { animation: rotate3 24s linear infinite; }
+    .rotate4 { animation: rotate4 30s linear infinite; }
   </style>
 </head>
 <body>
@@ -97,69 +87,86 @@
   <div class="sun"></div>
 
   <!-- Orbits -->
-  <div class="orbit" style="width: 250px; height: 250px;"></div>
-  <div class="orbit" style="width: 370px; height: 370px;"></div>
-  <div class="orbit" style="width: 490px; height: 490px;"></div>
-  <div class="orbit" style="width: 610px; height: 610px;"></div>
+  <div class="orbit" style="width: 300px; height: 300px;"></div>
+  <div class="orbit" style="width: 450px; height: 450px;"></div>
+  <div class="orbit" style="width: 600px; height: 600px;"></div>
+  <div class="orbit" style="width: 750px; height: 750px;"></div>
 
   <!-- Planets -->
-  <div class="planet-container rotate1" style="width: 250px; height: 250px;">
-    <div class="planet" id="repos" style="background-image: url('https://i.imgur.com/2Wf8gnf.png');">
-      <div class="planet-label">Repos</div>
-      <div class="planet-value">--</div>
-    </div>
+  <div class="planet-container rotate1" style="width: 300px; height: 300px;">
+    <div class="planet" id="repos" style="position: absolute; top: 0; left: 50%;">Repos:<br><span class="count">--</span></div>
   </div>
-
-  <div class="planet-container rotate2" style="width: 370px; height: 370px;">
-    <div class="planet" id="prs" style="background-image: url('https://i.imgur.com/VHwzmTb.png');">
-      <div class="planet-label">PRs</div>
-      <div class="planet-value">--</div>
-    </div>
+  <div class="planet-container rotate2" style="width: 450px; height: 450px;">
+    <div class="planet" id="prs" style="position: absolute; top: 0; left: 50%;">PRs:<br><span class="count">--</span></div>
   </div>
-
-  <div class="planet-container rotate3" style="width: 490px; height: 490px;">
-    <div class="planet" id="merged" style="background-image: url('https://i.imgur.com/T8vCcSi.png');">
-      <div class="planet-label">Merged</div>
-      <div class="planet-value">~</div>
-    </div>
+  <div class="planet-container rotate3" style="width: 600px; height: 600px;">
+    <div class="planet" id="merged" style="position: absolute; top: 0; left: 50%;">Merged:<br><span class="count">--</span></div>
   </div>
-
-  <div class="planet-container rotate4" style="width: 610px; height: 610px;">
-    <div class="planet" id="closed" style="background-image: url('https://i.imgur.com/TcsHZmy.png');">
-      <div class="planet-label">Closed</div>
-      <div class="planet-value">--</div>
-    </div>
+  <div class="planet-container rotate4" style="width: 750px; height: 750px;">
+    <div class="planet" id="closed" style="position: absolute; top: 0; left: 50%;">Closed:<br><span class="count">--</span></div>
   </div>
 </div>
 
 <script>
   const username = "SHISKEBAB";
+  const token = "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"; // 
 
-  async function fetchGitHubStats() {
+  async function fetchGitHubData() {
+    const headers = {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`
+    };
+
     try {
-      const headers = { Accept: "application/vnd.github+json" };
-
+      // Repositories
       const userRes = await fetch(`https://api.github.com/users/${username}`, { headers });
-      const user = await userRes.json();
+      const userData = await userRes.json();
 
-      const prsRes = await fetch(`https://api.github.com/search/issues?q=type:pr+author:${username}`, { headers });
-      const prs = await prsRes.json();
+      // PRs
+      const prRes = await fetch(`https://api.github.com/search/issues?q=type:pr+author:${username}`, { headers });
+      const prData = await prRes.json();
 
+      // Closed PRs
       const closedRes = await fetch(`https://api.github.com/search/issues?q=type:pr+author:${username}+is:closed`, { headers });
-      const closed = await closedRes.json();
+      const closedData = await closedRes.json();
 
-      // Update stats
-      document.querySelector("#repos .planet-value").textContent = user.public_repos;
-      document.querySelector("#prs .planet-value").textContent = prs.total_count;
-      document.querySelector("#closed .planet-value").textContent = closed.total_count;
-      // Merged is kept as "~" placeholder
+      // Merged PRs via GraphQL
+      const graphQLQuery = {
+        query: `
+          {
+            user(login: "${username}") {
+              pullRequests(states: MERGED) {
+                totalCount
+              }
+            }
+          }
+        `
+      };
+
+      const mergedRes = await fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(graphQLQuery)
+      });
+
+      const mergedData = await mergedRes.json();
+      const mergedCount = mergedData.data.user.pullRequests.totalCount;
+
+      // Update UI
+      document.querySelector("#repos .count").textContent = userData.public_repos;
+      document.querySelector("#prs .count").textContent = prData.total_count;
+      document.querySelector("#closed .count").textContent = closedData.total_count;
+      document.querySelector("#merged .count").textContent = mergedCount;
 
     } catch (error) {
-      console.error("GitHub API error:", error);
+      console.error("GitHub API Error:", error);
     }
   }
 
-  fetchGitHubStats();
+  fetchGitHubData();
 </script>
 
 </body>
