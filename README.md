@@ -7,7 +7,7 @@
 |     54       |     55       |      38       |       16        |       4        |
 
 <p align="center">
-  <strong>[✅ View Merged PRs Table](merged_prs.md)</strong>
+  <strong>[✅ View Merged PRs Table](scripts/merged_prs.md)</strong>
 </p>
 
 <p align="center">
