@@ -7,7 +7,12 @@
 |     54       |     55       |      38       |       16        |       4        |
 
 <p align="center">
+  <strong>[✅ View Merged PRs Table](merged_prs.md)</strong>
+</p>
+
+<p align="center">
   <strong>📊 Total Views = 113</strong>
 </p>
+
 
 <!-- STATS_END -->
