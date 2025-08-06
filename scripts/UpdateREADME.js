@@ -2,33 +2,47 @@ const fs = require("fs");
 const path = require("path");
 const fetch = require("node-fetch");
 
-const username = "SHISKEBAB"; // <-- your GitHub username
+const username = "SHISKEBAB"; // Your GitHub username
 const token = process.env.GITHUB_TOKEN;
 
-async function fetchGitHubStats() {
-  const headers = {
-    Authorization: `token ${token}`,
-    "User-Agent": "octobot-stats-script",
-  };
+const headers = {
+  Authorization: `token ${token}`,
+  "User-Agent": "GitHub-Stats-Script",
+};
 
-  const [repos, prs, issues] = await Promise.all([
-    fetch(`https://api.github.com/users/${username}/repos`, { headers }).then(res => res.json()),
-    fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr`, { headers }).then(res => res.json()),
-    fetch(`https://api.github.com/search/issues?q=author:${username}+type:issue`, { headers }).then(res => res.json())
-  ]);
+async function fetchAllRepos() {
+  let repos = [];
+  let page = 1;
 
-  const mergedPRs = prs.items?.filter(pr => pr.state === "closed")?.length || 0;
-  const openPRs = prs.items?.filter(pr => pr.state === "open")?.length || 0;
-  const closedIssues = issues.items?.filter(issue => issue.state === "closed")?.length || 0;
+  while (true) {
+    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&page=${page}`, { headers });
+    const data = await res.json();
+    if (data.length === 0) break;
+    repos = repos.concat(data.filter(repo => !repo.fork)); // only original repos
+    page++;
+  }
 
-  return {
-    repos: repos.length,
-    totalPRs: prs.total_count,
-    merged: mergedPRs,
-    opened: openPRs,
-    closed: closedIssues,
-    totalView: repos.length + prs.total_count + closedIssues, // or whatever logic
-  };
+  return repos;
+}
+
+async function fetchPRStats() {
+  const query = `type:pr author:${username}`;
+  const res = await fetch(`https://api.github.com/search/issues?q=${encodeURIComponent(query)}&per_page=100`, { headers });
+  const data = await res.json();
+
+  const prs = data.items || [];
+  const totalPRs = data.total_count;
+  const opened = prs.filter(pr => pr.state === "open").length;
+  const merged = prs.filter(pr => pr.pull_request && pr.state === "closed").length;
+
+  return { totalPRs, opened, merged };
+}
+
+async function fetchClosedIssues() {
+  const query = `type:issue author:${username} state:closed`;
+  const res = await fetch(`https://api.github.com/search/issues?q=${encodeURIComponent(query)}&per_page=100`, { headers });
+  const data = await res.json();
+  return data.total_count || 0;
 }
 
 function updateReadme(stats) {
@@ -53,6 +67,21 @@ function updateReadme(stats) {
   fs.writeFileSync(readmePath, readme);
 }
 
-fetchGitHubStats()
-  .then(updateReadme)
-  .catch(console.error);
+async function main() {
+  const repos = await fetchAllRepos();
+  const prStats = await fetchPRStats();
+  const closedIssues = await fetchClosedIssues();
+
+  const stats = {
+    repos: repos.length,
+    totalPRs: prStats.totalPRs,
+    opened: prStats.opened,
+    merged: prStats.merged,
+    closed: closedIssues,
+    totalView: repos.length + prStats.totalPRs + prStats.merged + prStats.opened + closedIssues,
+  };
+
+  updateReadme(stats);
+}
+
+main().catch(console.error);
