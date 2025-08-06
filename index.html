@@ -7,10 +7,9 @@
   <style>
     body {
       margin: 0;
-      background: radial-gradient(circle at center, #000 0%, #111 100%);
-      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at center, #000000 0%, #111111 100%);
       overflow: hidden;
-      color: white;
+      font-family: sans-serif;
     }
 
     .solar-system {
@@ -23,8 +22,8 @@
     }
 
     .sun {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       background-image: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png');
       background-size: cover;
       border-radius: 50%;
@@ -37,7 +36,9 @@
 
     .orbit {
       position: absolute;
-      border: 1px solid rgba(255,255,255,0.2);
+      top: 50%;
+      left: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 50%;
       transform: translate(-50%, -50%);
     }
@@ -46,7 +47,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform-origin: center;
+      transform-origin: center center;
     }
 
     .planet {
@@ -54,22 +55,26 @@
       top: 0;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #1a1a1a;
+      background: #222;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
       color: white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 14px;
-      white-space: nowrap;
+      text-align: center;
+      line-height: 60px;
+      font-size: 12px;
       box-shadow: 0 0 10px #00f;
+      transition: 0.3s;
+      cursor: default;
     }
 
     .planet:hover::after {
       content: attr(data-username);
       position: absolute;
       background: #000;
-      padding: 5px 8px;
+      padding: 4px 8px;
       border-radius: 5px;
-      top: 120%;
+      top: 110%;
       left: 50%;
       transform: translateX(-50%);
       white-space: nowrap;
@@ -77,20 +82,19 @@
       box-shadow: 0 0 5px white;
     }
 
+    /* Animations */
     @keyframes rotate1 {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-
     @keyframes rotate2 {
       from { transform: rotate(0deg); }
       to { transform: rotate(-360deg); }
     }
-
     .rotate1 { animation: rotate1 12s linear infinite; }
-    .rotate2 { animation: rotate2 20s linear infinite; }
-    .rotate3 { animation: rotate1 15s linear infinite; }
-    .rotate4 { animation: rotate2 25s linear infinite; }
+    .rotate2 { animation: rotate2 18s linear infinite; }
+    .rotate3 { animation: rotate1 24s linear infinite; }
+    .rotate4 { animation: rotate2 30s linear infinite; }
   </style>
 </head>
 <body>
@@ -98,32 +102,29 @@
 <div class="solar-system">
   <div class="sun"></div>
 
-  <!-- Visible Orbits -->
-  <div class="orbit" style="width: 250px; height: 250px; top: 50%; left: 50%;"></div>
-  <div class="orbit" style="width: 380px; height: 300px; top: 50%; left: 50%;"></div>
-  <div class="orbit" style="width: 500px; height: 420px; top: 50%; left: 50%;"></div>
-  <div class="orbit" style="width: 640px; height: 500px; top: 50%; left: 50%;"></div>
+  <!-- Orbits -->
+  <div class="orbit" style="width: 250px; height: 250px;"></div>
+  <div class="orbit" style="width: 370px; height: 300px;"></div>
+  <div class="orbit" style="width: 500px; height: 420px;"></div>
+  <div class="orbit" style="width: 650px; height: 540px;"></div>
 
   <!-- Orbiting Planets -->
   <div class="planet-orbit rotate1" style="width: 250px; height: 250px;">
-    <div class="planet" id="repos" data-username="Loading...">Repos: --</div>
+    <div class="planet" id="repos" data-username="Loading...">--</div>
   </div>
-
-  <div class="planet-orbit rotate2" style="width: 380px; height: 300px;">
-    <div class="planet" id="prs" data-username="Loading...">PRs: --</div>
+  <div class="planet-orbit rotate2" style="width: 370px; height: 300px;">
+    <div class="planet" id="prs" data-username="Loading...">--</div>
   </div>
-
   <div class="planet-orbit rotate3" style="width: 500px; height: 420px;">
-    <div class="planet" id="merged" data-username="Loading...">Merged: --</div>
+    <div class="planet" id="merged" data-username="Loading...">--</div>
   </div>
-
-  <div class="planet-orbit rotate4" style="width: 640px; height: 500px;">
-    <div class="planet" id="closed" data-username="Loading...">Closed: --</div>
+  <div class="planet-orbit rotate4" style="width: 650px; height: 540px;">
+    <div class="planet" id="closed" data-username="Loading...">--</div>
   </div>
 </div>
 
 <script>
-  const username = "SHISKEBAB"; // ✅ Use quotes!
+  const username = "SHISKEBAB";
 
   async function fetchGitHubStats() {
     const headers = { "Accept": "application/vnd.github+json" };
@@ -138,20 +139,24 @@
       const closedRes = await fetch(`https://api.github.com/search/issues?q=type:pr+author:${username}+is:closed`, { headers });
       const closed = await closedRes.json();
 
-      document.getElementById("repos").textContent = `Repos: ${user.public_repos}`;
-      document.getElementById("repos").dataset.username = username;
+      // For merged PRs, GitHub doesn't expose an easy count via search API.
+      // ~ means approximate or unknown
+      const mergedCount = "~";
 
-      document.getElementById("prs").textContent = `PRs: ${prs.total_count}`;
-      document.getElementById("prs").dataset.username = username;
+      document.getElementById("repos").textContent = user.public_repos;
+      document.getElementById("repos").dataset.username = "Repos";
 
-      document.getElementById("closed").textContent = `Closed: ${closed.total_count}`;
-      document.getElementById("closed").dataset.username = username;
+      document.getElementById("prs").textContent = prs.total_count;
+      document.getElementById("prs").dataset.username = "PRs";
 
-      document.getElementById("merged").textContent = `Merged: ~`;
-      document.getElementById("merged").dataset.username = username;
+      document.getElementById("closed").textContent = closed.total_count;
+      document.getElementById("closed").dataset.username = "Closed";
 
-    } catch (error) {
-      console.error("GitHub API error:", error);
+      document.getElementById("merged").textContent = mergedCount;
+      document.getElementById("merged").dataset.username = "Merged";
+
+    } catch (err) {
+      console.error("GitHub API error:", err);
     }
   }
 
