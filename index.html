@@ -1,120 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>GitHub Solar System</title>
   <style>
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: black;
+      background-color: black;
       overflow: hidden;
-      font-family: sans-serif;
-      color: white;
+      font-family: Arial, sans-serif;
     }
+
     .center {
       position: absolute;
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
     }
+
     .sun {
-      width: 100px;
-      height: 100px;
-      background-image: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png');
+      width: 120px;
+      height: 120px;
+      background: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png') no-repeat center;
       background-size: cover;
       border-radius: 50%;
-      position: relative;
+      box-shadow: 0 0 30px white;
     }
-    .planet {
-      position: absolute;
-      border-radius: 50%;
-      padding: 10px;
-      color: white;
-      white-space: nowrap;
-      transition: transform 0.3s;
-    }
+
     .orbit {
       position: absolute;
-      border: 1px dashed rgba(255,255,255,0.2);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
       border-radius: 50%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
     }
+
+    .planet {
+      position: absolute;
+      background-color: #222;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      white-space: nowrap;
+      box-shadow: 0 0 10px #00f;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
     .planet:hover::after {
       content: attr(data-username);
       position: absolute;
-      background: rgba(0,0,0,0.8);
-      padding: 4px 8px;
-      border-radius: 4px;
-      top: 120%;
+      top: 130%;
       left: 50%;
       transform: translateX(-50%);
+      background: #000;
+      padding: 6px 10px;
+      border-radius: 6px;
       white-space: nowrap;
       font-size: 12px;
+      box-shadow: 0 0 5px white;
     }
 
-    @keyframes orbit {
-      0% { transform: rotate(0deg) translateX(var(--distance)) rotate(0deg); }
-      100% { transform: rotate(360deg) translateX(var(--distance)) rotate(-360deg); }
+    /* Orbit animations */
+    @keyframes orbit1 {
+      from { transform: rotate(0deg) translateX(125px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(125px) rotate(-360deg); }
     }
 
-    .orbiting {
-      animation: orbit var(--duration) linear infinite;
+    @keyframes orbit2 {
+      from { transform: rotate(0deg) translateX(175px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(175px) rotate(-360deg); }
+    }
+
+    @keyframes orbit3 {
+      from { transform: rotate(0deg) translateX(230px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(230px) rotate(-360deg); }
+    }
+
+    @keyframes orbit4 {
+      from { transform: rotate(0deg) translateX(290px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(290px) rotate(-360deg); }
+    }
+
+    .orbiting1, .orbiting2, .orbiting3, .orbiting4 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       transform-origin: center;
     }
+
+    .orbiting1 { animation: orbit1 12s linear infinite; }
+    .orbiting2 { animation: orbit2 20s linear infinite; }
+    .orbiting3 { animation: orbit3 15s linear infinite; }
+    .orbiting4 { animation: orbit4 25s linear infinite; }
   </style>
 </head>
 <body>
-  <div class="center">
-    <div class="sun"></div>
 
-    <!-- Planet Nodes -->
-    <div class="orbit orbiting" style="width: 250px; height: 250px; --duration: 10s;">
-      <div class="planet" style="top: 0; left: 50%;" data-username="Repositories: Loading..." id="repos">Repos</div>
-    </div>
-    <div class="orbit orbiting" style="width: 350px; height: 300px; --duration: 15s;">
-      <div class="planet" style="top: 0; left: 50%;" data-username="PRs: Loading..." id="prs">PRs</div>
-    </div>
-    <div class="orbit orbiting" style="width: 450px; height: 220px; --duration: 20s;">
-      <div class="planet" style="top: 0; left: 50%;" data-username="Merged: Loading..." id="merged">Merged</div>
-    </div>
-    <div class="orbit orbiting" style="width: 550px; height: 320px; --duration: 18s;">
-      <div class="planet" style="top: 0; left: 50%;" data-username="Closed: Loading..." id="closed">Closed</div>
-    </div>
+<div class="center">
+  <div class="sun"></div>
+
+  <!-- Orbit paths (optional visual) -->
+  <div class="orbit" style="width: 250px; height: 250px;"></div>
+  <div class="orbit" style="width: 350px; height: 350px;"></div>
+  <div class="orbit" style="width: 460px; height: 460px;"></div>
+  <div class="orbit" style="width: 580px; height: 580px;"></div>
+
+  <!-- Orbiting Planets -->
+  <div class="orbiting1">
+    <div class="planet" id="repos" data-username="Loading...">Repos: --</div>
   </div>
 
-  <script>
-    const username = "SHISKEBAB"; 
+  <div class="orbiting2">
+    <div class="planet" id="prs" data-username="Loading...">PRs: --</div>
+  </div>
 
-    async function fetchGitHubStats() {
-      const headers = { "Accept": "application/vnd.github+json" };
-      const userRes = await fetch(`https://api.github.com/users/${username}`, { headers });
-      const userData = await userRes.json();
-      const repoCount = userData.public_repos;
+  <div class="orbiting3">
+    <div class="planet" id="merged" data-username="Loading...">Merged: --</div>
+  </div>
 
-      const prRes = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr`, { headers });
-      const prData = await prRes.json();
-      const prCount = prData.total_count;
+  <div class="orbiting4">
+    <div class="planet" id="closed" data-username="Loading...">Closed: --</div>
+  </div>
+</div>
 
-      const mergedRes = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr+is:merged`, { headers });
-      const mergedData = await mergedRes.json();
-      const mergedCount = mergedData.total_count;
+<script>
+  const username = "your-github-username"; // ✅ REPLACE THIS
 
-      const closedRes = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr+is:closed`, { headers });
-      const closedData = await closedRes.json();
-      const closedCount = closedData.total_count;
+  async function fetchGitHubStats() {
+    const headers = { "Accept": "application/vnd.github+json" };
 
-      document.getElementById("repos").textContent = `Repos: ${repoCount}`;
-      document.getElementById("repos").setAttribute("data-username", username);
-      document.getElementById("prs").textContent = `PRs: ${prCount}`;
-      document.getElementById("prs").setAttribute("data-username", username);
-      document.getElementById("merged").textContent = `Merged: ${mergedCount}`;
-      document.getElementById("merged").setAttribute("data-username", username);
-      document.getElementById("closed").textContent = `Closed: ${closedCount}`;
-      document.getElementById("closed").setAttribute("data-username", username);
-    }
+    // Get user info
+    const userRes = await fetch(`https://api.github.com/users/${username}`, { headers });
+    const user = await userRes.json();
 
-    fetchGitHubStats();
-  </script>
+    // Public Repos
+    document.getElementById("repos").textContent = `Repos: ${user.public_repos}`;
+    document.getElementById("repos").dataset.username = username;
+
+    // PRs (created)
+    const prsRes = await fetch(`https://api.github.com/search/issues?q=type:pr+author:${username}`, { headers });
+    const prs = await prsRes.json();
+    document.getElementById("prs").textContent = `PRs: ${prs.total_count}`;
+    document.getElementById("prs").dataset.username = username;
+
+    // Closed PRs (this includes merged)
+    const closedRes = await fetch(`https://api.github.com/search/issues?q=type:pr+author:${username}+is:closed`, { headers });
+    const closed = await closedRes.json();
+    document.getElementById("closed").textContent = `Closed: ${closed.total_count}`;
+    document.getElementById("closed").dataset.username = username;
+
+    // Merged PRs – Not supported directly, so skipped or simulated
+    document.getElementById("merged").textContent = `Merged: ~`;
+    document.getElementById("merged").dataset.username = username;
+  }
+
+  fetchGitHubStats();
+</script>
+
 </body>
 </html>
