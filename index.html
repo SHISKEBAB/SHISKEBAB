@@ -39,18 +39,18 @@
       top: 110%;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.9);
       color: black;
-      padding: 4px 8px;
-      border-radius: 5px;
-      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
     }
 
     .orbit {
       position: absolute;
       border: 1px dashed rgba(255, 255, 255, 0.3);
       border-radius: 50%;
-      animation: rotateOrbit 60s linear infinite;
     }
 
     .planet {
@@ -62,12 +62,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      text-align: center;
+      text-align: left;
       color: #000;
-      font-weight: bold;
-      font-size: 14px;
+      font-size: 13px;
       padding: 10px;
-      overflow: hidden;
+      overflow-y: auto;
+      max-height: 90%;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
 
     .navy {
@@ -82,32 +83,75 @@
       background: radial-gradient(circle, red, darkred);
     }
 
-    @keyframes rotateOrbit {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+    /* Rotations with different starting angles */
+    .orbit-1 {
+      animation: rotate1 20s linear infinite;
+    }
+
+    .orbit-2 {
+      animation: rotate2 30s linear infinite;
+    }
+
+    .orbit-3 {
+      animation: rotate3 40s linear infinite;
+    }
+
+    .orbit-4 {
+      animation: rotate4 50s linear infinite;
     }
 
     .orbit > .planet {
-      animation: counterRotate 60s linear infinite;
+      animation: inherit;
     }
 
-    @keyframes counterRotate {
-      0% {
-        transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
-      }
+    @keyframes rotate1 {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes rotate2 {
+      0% { transform: rotate(90deg); }
+      100% { transform: rotate(450deg); }
+    }
+
+    @keyframes rotate3 {
+      0% { transform: rotate(180deg); }
+      100% { transform: rotate(540deg); }
+    }
+
+    @keyframes rotate4 {
+      0% { transform: rotate(270deg); }
+      100% { transform: rotate(630deg); }
+    }
+
+    .orbit > .planet::before {
+      content: "";
+      display: block;
+      transform: translateX(var(--radius));
     }
 
     .planet-content {
-      max-width: 90%;
+      background: rgba(255, 255, 255, 0.85);
+      color: black;
+      padding: 8px;
+      border-radius: 10px;
       overflow-y: auto;
-      max-height: 90%;
+      max-height: 100%;
+      width: 90%;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    }
+
+    .planet-content strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: #000;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .planet-content div {
+      margin-bottom: 4px;
     }
 
   </style>
@@ -117,28 +161,28 @@
     <div class="sun"></div>
 
     <!-- Orbit 1 - Repositories -->
-    <div class="orbit" style="width: 300px; height: 300px;">
+    <div class="orbit orbit-1" style="width: 300px; height: 300px;">
       <div class="planet navy" style="width: 50px; height: 50px; --radius: 150px;">
         <div class="planet-content" id="repos"></div>
       </div>
     </div>
 
     <!-- Orbit 2 - PRs -->
-    <div class="orbit" style="width: 400px; height: 400px;">
+    <div class="orbit orbit-2" style="width: 400px; height: 400px;">
       <div class="planet lemon" style="width: 70px; height: 70px; --radius: 200px;">
         <div class="planet-content" id="prs"></div>
       </div>
     </div>
 
-    <!-- Orbit 3 - Merges -->
-    <div class="orbit" style="width: 500px; height: 500px;">
+    <!-- Orbit 3 - Merged PRs -->
+    <div class="orbit orbit-3" style="width: 500px; height: 500px;">
       <div class="planet red" style="width: 75px; height: 75px; --radius: 250px;">
         <div class="planet-content" id="merges"></div>
       </div>
     </div>
 
     <!-- Orbit 4 - Closed PRs -->
-    <div class="orbit" style="width: 600px; height: 600px;">
+    <div class="orbit orbit-4" style="width: 600px; height: 600px;">
       <div class="planet lemon" style="width: 100px; height: 100px; --radius: 300px;">
         <div class="planet-content" id="closed-prs"></div>
       </div>
@@ -146,49 +190,35 @@
   </div>
 
   <script>
-    const token = "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"; // WARNING: Don't expose in production
+    const token = "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"; // ⚠️ Do NOT expose this in production!
     const username = "SHISKEBAB";
 
     const headers = {
       Authorization: `token ${token}`,
     };
 
-    const fetchRepos = async () => {
-      const res = await fetch(`https://api.github.com/users/${username}/repos`, { headers });
-      const data = await res.json();
-      document.getElementById("repos").innerHTML =
-        "<strong>Repositories:</strong><br>" +
-        data.map(repo => `<div>${repo.name}</div>`).join("");
-    };
+    async function fetchAndDisplay(endpoint, elementId, label) {
+      try {
+        const res = await fetch(endpoint, { headers });
+        const data = await res.json();
+        const container = document.getElementById(elementId);
 
-    const fetchPRs = async () => {
-      const res = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr`, { headers });
-      const data = await res.json();
-      document.getElementById("prs").innerHTML =
-        "<strong>PRs:</strong><br>" +
-        data.items.slice(0, 10).map(pr => `<div>${pr.title}</div>`).join("");
-    };
+        const items = data.items || data; // Some responses use `items`
 
-    const fetchMergedPRs = async () => {
-      const res = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr+is:merged`, { headers });
-      const data = await res.json();
-      document.getElementById("merges").innerHTML =
-        "<strong>Merged PRs:</strong><br>" +
-        data.items.slice(0, 10).map(pr => `<div>${pr.title}</div>`).join("");
-    };
+        container.innerHTML = `<strong>${label}</strong><br>` +
+          items.slice(0, 6).map(item =>
+            `<div>• ${item.name || item.title}</div>`
+          ).join("");
+      } catch (error) {
+        console.error(`Error fetching ${label}:`, error);
+        document.getElementById(elementId).innerHTML = `<strong>${label}</strong><br>Error loading`;
+      }
+    }
 
-    const fetchClosedPRs = async () => {
-      const res = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr+is:closed`, { headers });
-      const data = await res.json();
-      document.getElementById("closed-prs").innerHTML =
-        "<strong>Closed PRs:</strong><br>" +
-        data.items.slice(0, 10).map(pr => `<div>${pr.title}</div>`).join("");
-    };
-
-    fetchRepos();
-    fetchPRs();
-    fetchMergedPRs();
-    fetchClosedPRs();
+    fetchAndDisplay(`https://api.github.com/users/${username}/repos`, "repos", "Repositories");
+    fetchAndDisplay(`https://api.github.com/search/issues?q=author:${username}+type:pr`, "prs", "Pull Requests");
+    fetchAndDisplay(`https://api.github.com/search/issues?q=author:${username}+type:pr+is:merged`, "merges", "Merged PRs");
+    fetchAndDisplay(`https://api.github.com/search/issues?q=author:${username}+type:pr+is:closed`, "closed-prs", "Closed PRs");
   </script>
 </body>
 </html>
