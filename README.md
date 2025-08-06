@@ -1,3 +1,4 @@
 ## 🪐 GitHub Activity (Live)
 
-👉 [View Interactive GitHub Solar System](https://SHISKEBAB.github.io/github-solar-system/)
+![My GitHub Solar System](https://shiskebab.github.io/SHISKEBAB/)
+
