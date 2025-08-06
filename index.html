@@ -10,7 +10,6 @@
       background-color: black;
       overflow: hidden;
       font-family: Arial, sans-serif;
-      color: white;
     }
 
     .solar-system {
@@ -28,7 +27,6 @@
       height: 180px;
       background-image: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png');
       background-size: cover;
-      background-color: yellow;
       border-radius: 50%;
       top: 50%;
       left: 50%;
@@ -60,24 +58,26 @@
       background-size: cover;
       background-position: center;
       position: absolute;
-      top: 0;
-      left: 50%;
       transform: translate(-50%, -50%);
+      top: -125px; /* Distance from center for orbiting effect */
+      left: 50%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 12px;
-      font-weight: bold;
+      color: white;
+      font-size: 13px;
       text-align: center;
-      padding: 5px;
-      box-shadow: 0 0 10px white;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px black;
     }
 
-    .planet[data-label]::before {
-      content: attr(data-label) ": ";
-      display: block;
+    .planet-label {
       font-size: 11px;
-      margin-bottom: 2px;
+    }
+
+    .planet-value {
+      font-size: 14px;
     }
 
     @keyframes orbit1 { 100% { transform: rotate(360deg); } }
@@ -85,10 +85,10 @@
     @keyframes orbit3 { 100% { transform: rotate(360deg); } }
     @keyframes orbit4 { 100% { transform: rotate(-360deg); } }
 
-    .rotate1 { animation: orbit1 10s linear infinite; }
-    .rotate2 { animation: orbit2 15s linear infinite; }
+    .rotate1 { animation: orbit1 12s linear infinite; }
+    .rotate2 { animation: orbit2 16s linear infinite; }
     .rotate3 { animation: orbit3 20s linear infinite; }
-    .rotate4 { animation: orbit4 25s linear infinite; }
+    .rotate4 { animation: orbit4 24s linear infinite; }
   </style>
 </head>
 <body>
@@ -98,27 +98,42 @@
 
   <!-- Orbits -->
   <div class="orbit" style="width: 250px; height: 250px;"></div>
-  <div class="orbit" style="width: 360px; height: 360px;"></div>
-  <div class="orbit" style="width: 470px; height: 470px;"></div>
-  <div class="orbit" style="width: 580px; height: 580px;"></div>
+  <div class="orbit" style="width: 370px; height: 370px;"></div>
+  <div class="orbit" style="width: 490px; height: 490px;"></div>
+  <div class="orbit" style="width: 610px; height: 610px;"></div>
 
-  <!-- Planet Containers -->
+  <!-- Planets -->
   <div class="planet-container rotate1" style="width: 250px; height: 250px;">
-    <div class="planet" id="repos" data-label="Repo" style="background-image: url('https://i.imgur.com/2Wf8gnf.png');"></div>
+    <div class="planet" id="repos" style="background-image: url('https://i.imgur.com/2Wf8gnf.png');">
+      <div class="planet-label">Repos</div>
+      <div class="planet-value">--</div>
+    </div>
   </div>
-  <div class="planet-container rotate2" style="width: 360px; height: 360px;">
-    <div class="planet" id="prs" data-label="PR" style="background-image: url('https://i.imgur.com/VHwzmTb.png');"></div>
+
+  <div class="planet-container rotate2" style="width: 370px; height: 370px;">
+    <div class="planet" id="prs" style="background-image: url('https://i.imgur.com/VHwzmTb.png');">
+      <div class="planet-label">PRs</div>
+      <div class="planet-value">--</div>
+    </div>
   </div>
-  <div class="planet-container rotate3" style="width: 470px; height: 470px;">
-    <div class="planet" id="merged" data-label="Merge" style="background-image: url('https://i.imgur.com/T8vCcSi.png');"></div>
+
+  <div class="planet-container rotate3" style="width: 490px; height: 490px;">
+    <div class="planet" id="merged" style="background-image: url('https://i.imgur.com/T8vCcSi.png');">
+      <div class="planet-label">Merged</div>
+      <div class="planet-value">~</div>
+    </div>
   </div>
-  <div class="planet-container rotate4" style="width: 580px; height: 580px;">
-    <div class="planet" id="closed" data-label="Closed" style="background-image: url('https://i.imgur.com/TcsHZmy.png');"></div>
+
+  <div class="planet-container rotate4" style="width: 610px; height: 610px;">
+    <div class="planet" id="closed" style="background-image: url('https://i.imgur.com/TcsHZmy.png');">
+      <div class="planet-label">Closed</div>
+      <div class="planet-value">--</div>
+    </div>
   </div>
 </div>
 
 <script>
-  const username = "SHISKEBAB"; // change this to your GitHub username
+  const username = "SHISKEBAB";
 
   async function fetchGitHubStats() {
     try {
@@ -133,14 +148,14 @@
       const closedRes = await fetch(`https://api.github.com/search/issues?q=type:pr+author:${username}+is:closed`, { headers });
       const closed = await closedRes.json();
 
-      // Update text
-      document.getElementById("repos").textContent = user.public_repos;
-      document.getElementById("prs").textContent = prs.total_count;
-      document.getElementById("closed").textContent = closed.total_count;
-      document.getElementById("merged").textContent = "~";
+      // Update stats
+      document.querySelector("#repos .planet-value").textContent = user.public_repos;
+      document.querySelector("#prs .planet-value").textContent = prs.total_count;
+      document.querySelector("#closed .planet-value").textContent = closed.total_count;
+      // Merged is kept as "~" placeholder
 
-    } catch (err) {
-      console.error("GitHub API error:", err);
+    } catch (error) {
+      console.error("GitHub API error:", error);
     }
   }
 
