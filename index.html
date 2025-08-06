@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      background: radial-gradient(circle at center, #000000 0%, #111111 100%);
+      background: black;
       overflow: hidden;
       font-family: sans-serif;
       color: white;
@@ -18,28 +18,30 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 1000px;
-      height: 1000px;
+      width: 1200px;
+      height: 1200px;
     }
 
     .sun {
-      width: 180px;
-      height: 180px;
-      background-image: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png');
-      background-size: cover;
-      border-radius: 50%;
       position: absolute;
       top: 50%;
       left: 50%;
+      width: 180px;
+      height: 180px;
+      background: yellow;
+      border-radius: 50%;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 40px white;
+      background-image: url("https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png");
+      background-size: cover;
+      box-shadow: 0 0 60px yellow;
+      z-index: 2;
     }
 
     .orbit {
       position: absolute;
       top: 50%;
       left: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
       border-radius: 50%;
       transform: translate(-50%, -50%);
     }
@@ -52,64 +54,89 @@
     }
 
     .planet {
-      width: 90px;
-      height: 90px;
+      width: 350px;
+      height: 350px;
       border-radius: 50%;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 24px;
       font-weight: bold;
-      text-align: center;
-      padding: 10px;
       color: white;
+      position: absolute;
+      left: 50%;
+      top: -175px;
+      transform: translateX(-50%);
+      box-shadow: 0 0 40px white;
+      text-align: center;
     }
 
-    #repos { background-color: pink; }
-    #prs { background-color: skyblue; }
-    #merged { background-color: limegreen; }
-    #closed { background-color: gray; }
+    #repos { background: radial-gradient(circle, #ff7eb9, #ff2e63); }
+    #prs { background: radial-gradient(circle, #89f7fe, #66a6ff); }
+    #merged { background: radial-gradient(circle, #a8ff78, #78ffd6); }
+    #closed { background: radial-gradient(circle, #d3d3d3, #999999); }
 
-    @keyframes rotate1 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes rotate2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-    @keyframes rotate3 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes rotate4 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+    @keyframes rotate1 { 100% { transform: rotate(360deg); } }
+    @keyframes rotate2 { 100% { transform: rotate(-360deg); } }
+    @keyframes rotate3 { 100% { transform: rotate(360deg); } }
+    @keyframes rotate4 { 100% { transform: rotate(-360deg); } }
 
-    .rotate1 { animation: rotate1 12s linear infinite; }
-    .rotate2 { animation: rotate2 18s linear infinite; }
-    .rotate3 { animation: rotate3 24s linear infinite; }
-    .rotate4 { animation: rotate4 30s linear infinite; }
+    .rotate1 { animation: rotate1 24s linear infinite; }
+    .rotate2 { animation: rotate2 30s linear infinite; }
+    .rotate3 { animation: rotate3 36s linear infinite; }
+    .rotate4 { animation: rotate4 42s linear infinite; }
+
+    .label { font-size: 22px; }
+    .count { font-size: 48px; }
   </style>
 </head>
 <body>
 
 <div class="solar-system">
-  <div class="sun"></div>
+  <div class="sun" title="SHISKEBAB"></div>
 
   <!-- Orbits -->
-  <div class="orbit" style="width: 300px; height: 300px;"></div>
-  <div class="orbit" style="width: 450px; height: 450px;"></div>
-  <div class="orbit" style="width: 600px; height: 600px;"></div>
-  <div class="orbit" style="width: 750px; height: 750px;"></div>
+  <div class="orbit" style="width: 500px; height: 500px;"></div>
+  <div class="orbit" style="width: 700px; height: 700px;"></div>
+  <div class="orbit" style="width: 900px; height: 900px;"></div>
+  <div class="orbit" style="width: 1100px; height: 1100px;"></div>
 
   <!-- Planets -->
-  <div class="planet-container rotate1" style="width: 300px; height: 300px;">
-    <div class="planet" id="repos" style="position: absolute; top: 0; left: 50%;">Repos:<br><span class="count">--</span></div>
+  <div class="planet-container rotate1" style="width: 500px; height: 500px;">
+    <div class="planet" id="repos">
+      <span class="label">Repos</span>
+      <span class="count">--</span>
+    </div>
   </div>
-  <div class="planet-container rotate2" style="width: 450px; height: 450px;">
-    <div class="planet" id="prs" style="position: absolute; top: 0; left: 50%;">PRs:<br><span class="count">--</span></div>
+
+  <div class="planet-container rotate2" style="width: 700px; height: 700px;">
+    <div class="planet" id="prs">
+      <span class="label">PRs</span>
+      <span class="count">--</span>
+    </div>
   </div>
-  <div class="planet-container rotate3" style="width: 600px; height: 600px;">
-    <div class="planet" id="merged" style="position: absolute; top: 0; left: 50%;">Merged:<br><span class="count">--</span></div>
+
+  <div class="planet-container rotate3" style="width: 900px; height: 900px;">
+    <div class="planet" id="merged">
+      <span class="label">Merged</span>
+      <span class="count">~</span>
+    </div>
   </div>
-  <div class="planet-container rotate4" style="width: 750px; height: 750px;">
-    <div class="planet" id="closed" style="position: absolute; top: 0; left: 50%;">Closed:<br><span class="count">--</span></div>
+
+  <div class="planet-container rotate4" style="width: 1100px; height: 1100px;">
+    <div class="planet" id="closed">
+      <span class="label">Closed</span>
+      <span class="count">--</span>
+    </div>
   </div>
 </div>
 
 <script>
   const username = "SHISKEBAB";
-  const token = "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"; // 
+
+  // 🔐 PASTE YOUR PERSONAL ACCESS TOKEN HERE (keep private!)
+  const token = "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";
 
   async function fetchGitHubData() {
     const headers = {
@@ -130,7 +157,7 @@
       const closedRes = await fetch(`https://api.github.com/search/issues?q=type:pr+author:${username}+is:closed`, { headers });
       const closedData = await closedRes.json();
 
-      // Merged PRs via GraphQL
+      // Merged PRs (GraphQL)
       const graphQLQuery = {
         query: `
           {
@@ -155,14 +182,13 @@
       const mergedData = await mergedRes.json();
       const mergedCount = mergedData.data.user.pullRequests.totalCount;
 
-      // Update UI
+      // Update DOM
       document.querySelector("#repos .count").textContent = userData.public_repos;
       document.querySelector("#prs .count").textContent = prData.total_count;
       document.querySelector("#closed .count").textContent = closedData.total_count;
       document.querySelector("#merged .count").textContent = mergedCount;
-
-    } catch (error) {
-      console.error("GitHub API Error:", error);
+    } catch (e) {
+      console.error("GitHub API error", e);
     }
   }
 
