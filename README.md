@@ -1,40 +1,38 @@
-<p align="left">Hi I am SHISHIR SHREEDHAR TAMBE.<br>Engineer & Consultant in all Civil Relatd projects. Technical Writer, transitioning in TECH. Open source contributor.</p>
+<h1 align="center">Hi 👋, I'm Shishir Shreedhar Tambe</h1>
+<h3 align="center">Engineer & Consultant in all Civil Relatd projects. Technical Writer, transitioning in TECH. Open source contributor.</h3>
 
-###
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=shiskebab&label=Profile%20views&color=0e75b6&style=flat" alt="shiskebab" /> </p>
 
-<div align="left">
-  <a href="https://www.linkedin.com/in/shishir-tambe/" target="_blank">
-    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/linkedin/default.svg" width="52" height="40" alt="linkedin logo"  />
-  </a>
-  <a href="https://x.com/Shishtam22" target="_blank">
-    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/twitter/default.svg" width="52" height="40" alt="twitter logo"  />
-  </a>
-  <a href="shiskebab_1" target="_blank">
-    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/discord/default.svg" width="52" height="40" alt="discord logo"  />
-  </a>
-  <a href="https://www.youtube.com/@themanwithdailycontent" target="_blank">
-    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="52" height="40" alt="youtube logo"  />
-  </a>
-  <a href="https://medium.com/@shishirtambe0" target="_blank">
-    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/medium/default.svg" width="52" height="40" alt="medium logo"  />
-  </a>
-  <a href="https://www.instagram.com/shogun_kuvekuvatsu/" target="_blank">
-    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/instagram/default.svg" width="52" height="40" alt="instagram logo"  />
-  </a>
-</div>
+- 🔭 I’m currently working on [O-RAN-SC](https://github.com/o-ran-sc/nonrtric)
 
-###
+- 🌱 I’m currently learning **Docsify, Github actions**
 
-<div align="center" style="width: 100%">
-  <a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@undefined/0">
-    <img style="width: 100%" src="https://github-readme-medium-recent-article.vercel.app/medium/@undefined/0" alt="Medium post 1"  />
-  </a>
-  <a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@undefined/1">
-    <img style="width: 100%" src="https://github-readme-medium-recent-article.vercel.app/medium/@undefined/1" alt="Medium post 2"  />
-  </a>
-  <a target="_blank" href="https://github-readme-medium-recent-article.vercel.app/medium/@undefined/2">
-    <img style="width: 100%" src="https://github-readme-medium-recent-article.vercel.app/medium/@undefined/2" alt="Medium post 3"  />
-  </a>
-</div>
+- 👯 I’m looking to collaborate on [LFX Mentorship (Open Quantum Safe)](https://github.com/open-quantum-safe/liboqs)
 
-###
+- 👨‍💻 All of my projects are available at [[sample]]([sample])
+
+- 📝 I regularly write articles on [https://medium.com/@shishirtambe0](https://medium.com/@shishirtambe0)
+
+- 💬 Ask me about **Markdown, Qgis**
+
+- 📫 How to reach me **shishirstambe01@gmail.com**
+
+- 📄 Know about my experiences [[sample]]([sample])
+
+<h3 align="left">Connect with me:</h3>
+<p align="left">
+<a href="https://twitter.com/shishtam22" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="shishtam22" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/https://www.linkedin.com/in/shishir-tambe/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="https://www.linkedin.com/in/shishir-tambe/" height="30" width="40" /></a>
+<a href="https://hashnode.com/@shishirlearns" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hashnode.svg" alt="@shishirlearns" height="30" width="40" /></a>
+<a href="https://medium.com/@shishirtambe0" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/medium.svg" alt="@shishirtambe0" height="30" width="40" /></a>
+</p>
+
+<h3 align="left">Languages and Tools:</h3>
+<p align="left"> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://postman.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> </p>
+
+<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=shiskebab&show_icons=true&locale=en&layout=compact" alt="shiskebab" /></p>
+
+<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=shiskebab&show_icons=true&locale=en" alt="shiskebab" /></p>
+
+<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=shiskebab&" alt="shiskebab" /></p>
+
