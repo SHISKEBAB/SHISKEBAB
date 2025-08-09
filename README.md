@@ -36,3 +36,5 @@
 
 <p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=shiskebab&" alt="shiskebab" /></p>
 
+<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="30498aa0-2a64-433b-bfd6-70bab0314153" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+
